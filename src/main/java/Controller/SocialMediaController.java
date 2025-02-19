@@ -1,7 +1,10 @@
 package Controller;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import io.javalin.http.Handler;
+import Model.*;
+import DAO.*;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
@@ -17,10 +20,26 @@ public class SocialMediaController {
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
-
+        app.post("localhost:8080/register", SocialMediaController.regiHandler);
         return app;
     }
-
+    public static Handler regiHandler = ctx -> {
+        ObjectMapper om = new ObjectMapper();
+        String jsonSt = ctx.body();
+        boolean success = false;
+        Account new_user = om.readValue(jsonSt, Account.class);
+        if (new_user.getPassword().length() > 4 &&
+        
+        ) {
+            success = true;
+        }
+        if (success) {
+        ctx.status(200);
+        }
+        else {
+        ctx.status(400);
+        }
+    };
     /**
      * This is an example handler for an example endpoint.
      * @param context The Javalin Context object manages information about both the HTTP request and response.
