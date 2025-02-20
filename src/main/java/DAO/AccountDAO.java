@@ -48,4 +48,24 @@ public class AccountDAO {
         }
         return null;
     }
+    public Account getAccountByUser(String username){
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            String sql = "SELECT account.account_id, account.username, account.password FROM account WHERE username = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            //write preparedStatement's setString method here.
+            preparedStatement.setString(1, username);
+            ResultSet ResultSet = preparedStatement.executeQuery();
+            
+            // if(ResultSet.next()){ // we expect no more than 1 username returned
+            while(ResultSet.next()){
+                Account credentials = new Account(ResultSet.getInt("account_id"), ResultSet.getString("username"), ResultSet.getString("password"));
+                return credentials;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }    
 }

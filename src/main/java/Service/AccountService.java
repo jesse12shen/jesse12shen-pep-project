@@ -43,7 +43,6 @@ public class AccountService {
         return this.accountDAO.getAllAccounts();
     }
     /**
-     * TODO: Use the AccountDAO to persist an account. The given Account will not have an id provided.
      *
      * @param account an account object.
      * @return The persisted account if the persistence is successful.
@@ -51,7 +50,18 @@ public class AccountService {
     public Account RegisterNew(Account account) {
         if (account.getPassword().length() < 4 || account.getUsername().length() == 0) {
             return null;
-        } // I think this is where I should implement the password and username requirements
+        } // password and username requirements
         return this.accountDAO.insertAccount(account); //insertAccount should return null if username is not unique
+    }
+    public Account Login(Account account) {
+        Account credentials = this.accountDAO.getAccountByUser(account.getUsername());
+        if (credentials == null || !account.getPassword().equals(credentials.getPassword())) //we'd probably want to distinguish the errors, throw an exception? Return a dummy account with specifics?
+        {
+            // System.out.println("login was" + account.getPassword() + "but actually " + credentials.getPassword());
+            
+            // System.out.println(account.getUsername() == credentials.getUsername());
+            return null;
+        }
+        return credentials;
     }
 }

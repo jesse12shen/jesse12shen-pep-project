@@ -23,6 +23,7 @@ public class SocialMediaController {
         // app.get("example-endpoint", this::exampleHandler);
         app.post("/register", SocialMediaController.regiHandler);
         // localhost:8080 might already be loaded in
+        app.post("/login", SocialMediaController.login);
         return app;
     }
     public static Handler regiHandler = ctx -> {
@@ -37,14 +38,27 @@ public class SocialMediaController {
         // ) {
         //     success = true;
         // }
-        Account result = regiCall.RegisterNew(new_user);
-        // System.out.println(result);
-        if (result != null) {
+        Account result_a = regiCall.RegisterNew(new_user); // RegisterNew either returns a null object if unsuccessful, or Account added if successful
+        System.out.println("this account was created:" + result_a);
+        if (result_a != null) {
         ctx.status(200);
-        ctx.json(result);
+        ctx.json(result_a);
         }
         else {
         ctx.status(400);
+        }
+    };
+    public static Handler login = ctx -> {
+        ObjectMapper om = new ObjectMapper();
+        String jsonBody = ctx.body();
+        Account loginInfo = om.readValue(jsonBody, Account.class);
+        AccountService loginCheck = new AccountService();
+        Account result_a = loginCheck.Login(loginInfo);
+        if (result_a == null) {
+            ctx.status(401);
+        } else {
+            ctx.status(200);
+            ctx.json(result_a);
         }
     };
     /**
