@@ -49,9 +49,9 @@ public class AccountService {
      * @return The persisted account if the persistence is successful.
      */
     public Account RegisterNew(Account account) {
-        if (account.getPassword().length() < 4) {
+        if (account.getPassword().length() < 4 || account.getUsername().length() == 0) {
             return null;
-        } // I think this is where I should implement the password requirements
+        } // I think this is where I should implement the password and username requirements
         return this.accountDAO.insertAccount(account); //insertAccount should return null if username is not unique
     }
 }
