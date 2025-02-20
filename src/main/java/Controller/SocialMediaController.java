@@ -3,8 +3,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import Model.*;
-import DAO.*;
+import Model.*; 
+// import DAO.*;
+import Service.*;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
@@ -19,22 +20,28 @@ public class SocialMediaController {
      */
     public Javalin startAPI() {
         Javalin app = Javalin.create();
-        app.get("example-endpoint", this::exampleHandler);
-        app.post("localhost:8080/register", SocialMediaController.regiHandler);
+        // app.get("example-endpoint", this::exampleHandler);
+        app.post("/register", SocialMediaController.regiHandler);
+        // localhost:8080 might already be loaded in
         return app;
     }
     public static Handler regiHandler = ctx -> {
         ObjectMapper om = new ObjectMapper();
         String jsonSt = ctx.body();
-        boolean success = false;
+        // boolean success = false;
+        // AccountDAO DAO = new AccountDAO();
+        AccountService regiCall = new AccountService();
         Account new_user = om.readValue(jsonSt, Account.class);
-        if (new_user.getPassword().length() > 4 &&
+        // if (new_user.getPassword().length() > 4 &&
         
-        ) {
-            success = true;
-        }
-        if (success) {
+        // ) {
+        //     success = true;
+        // }
+        Account result = regiCall.RegisterNew(new_user);
+        // System.out.println(result);
+        if (result != null) {
         ctx.status(200);
+        ctx.json(result);
         }
         else {
         ctx.status(400);
