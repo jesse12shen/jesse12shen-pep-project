@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 // import io.javalin.http.Context;
 import io.javalin.http.Handler;
+// import java.util.Optional;
 import Model.*; 
 // import DAO.*;
 import Service.*;
@@ -25,7 +26,8 @@ public class SocialMediaController {
         // localhost:8080 might already be loaded in
         app.post("/login", SocialMediaController.login);
         app.post("messages", SocialMediaController.sendMsg);
-        app.get("messages", SocialMediaController.retrieveAllMsg);
+        app.get("messages", SocialMediaController.rtvAllMsg);
+        app.get("messages/{message_id}", SocialMediaController.rtvMsg);
         return app;
     }
     public static Handler regiHandler = ctx -> {
@@ -77,10 +79,25 @@ public class SocialMediaController {
             ctx.json(result_m);
         }
     };
-    public static Handler retrieveAllMsg = ctx -> {
+    public static Handler rtvAllMsg = ctx -> {
         // ObjectMapper om = new ObjectMapper();
         MessageService getAll = new MessageService();
         ctx.status(200);
         ctx.json(getAll.getAllMessages());
+    };
+    public static Handler rtvMsg = ctx -> {
+        MessageService getMsg = new MessageService();
+        ctx.status(200);
+        // Optional<Message> result_m = Optional.ofNullable(getMsg.getMessageByID(Integer.parseInt(ctx.pathParam("message_id"))));
+        Message result_m = getMsg.getMessageByID(Integer.parseInt(ctx.pathParam("message_id")));
+        // needs a bit more implementation to work
+        if (result_m != null) { 
+        ctx.json(result_m);
+        } else {
+            ctx.json("");
+        }
+
+
+        // ctx.json(null); // you get a 500 error when this happens
     };
 }

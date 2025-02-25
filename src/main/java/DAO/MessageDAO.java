@@ -46,8 +46,27 @@ public class MessageDAO {
         }
         return null;
     }
-    
-    // Don't think I need this method from the AccountDAO
+    public Message getMessageByID( int id) {
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            String sql = "SELECT Message.message_id, message.posted_by, message.message_text, message.time_posted_epoch FROM message WHERE message_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            //write preparedStatement's setString method here.
+            preparedStatement.setInt(1, id);
+            ResultSet ResultSet = preparedStatement.executeQuery();
+            
+            // if(ResultSet.next()){ // we expect no more than 1 message returned
+            while(ResultSet.next()){
+                Message msg = new Message(ResultSet.getInt("message_id"), ResultSet.getInt("posted_by"), ResultSet.getString("message_text"), ResultSet.getLong("time_posted_epoch"));
+                return msg;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    // Don't think I need this half-implemented method from the AccountDAO
     // public Message getMessageByUser(String username){
     //     Connection connection = ConnectionUtil.getConnection();
     //     try {

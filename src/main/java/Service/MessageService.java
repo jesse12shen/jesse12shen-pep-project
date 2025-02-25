@@ -47,6 +47,9 @@ public class MessageService {
         } // message requirements
         return this.MessageDAO.insertMessage(Message); //insertMessage should return null if username is not unique
     }
+    public Message getMessageByID( int id) {
+        return this.MessageDAO.getMessageByID(id);
+    }
     // public Message Login(Message Message) {
     //     Message credentials = this.MessageDAO.getMessageByUser(Message.getUsername());
     //     if (credentials == null || !Message.getPassword().equals(credentials.getPassword())) //we'd probably want to distinguish the errors, throw an exception? Return a dummy Message with specifics?
