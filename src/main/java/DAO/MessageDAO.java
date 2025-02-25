@@ -28,12 +28,8 @@ public class MessageDAO {
     public Message insertMessage(Message Message){
         Connection connection = ConnectionUtil.getConnection();
         try {
-//          Write SQL logic here. You should only be inserting with the name column, so that the database may
-//          automatically generate a primary key.
             String sql = "INSERT INTO message (posted_by, message_text, time_posted_epoch) VALUES (?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            //write preparedStatement's setString method here.
             preparedStatement.setInt(1, Message.getPosted_by());
             preparedStatement.setString(2, Message.getMessage_text());
             preparedStatement.setLong(3, Message.getTime_posted_epoch());
@@ -42,6 +38,7 @@ public class MessageDAO {
             
             if(pkeyResultSet.next()){
                 int generated_Message_id = (int) pkeyResultSet.getInt("Message_id");
+                // System.out.println("message retrieved");
                 return new Message(generated_Message_id, Message.getPosted_by(), Message.getMessage_text(), Message.getTime_posted_epoch());
                 }
         }catch(SQLException e){

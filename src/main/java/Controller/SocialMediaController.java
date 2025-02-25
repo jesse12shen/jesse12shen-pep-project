@@ -1,7 +1,7 @@
 package Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
-import io.javalin.http.Context;
+// import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import Model.*; 
 // import DAO.*;
@@ -24,6 +24,7 @@ public class SocialMediaController {
         app.post("/register", SocialMediaController.regiHandler);
         // localhost:8080 might already be loaded in
         app.post("/login", SocialMediaController.login);
+        app.post("messages", SocialMediaController.send_msg);
         return app;
     }
     public static Handler regiHandler = ctx -> {
@@ -75,13 +76,4 @@ public class SocialMediaController {
             ctx.json(result_m);
         }
     };
-    /**
-     * This is an example handler for an example endpoint.
-     * @param context The Javalin Context object manages information about both the HTTP request and response.
-     */
-    private void exampleHandler(Context context) {
-        context.json("sample text");
-    }
-
-
 }

@@ -81,8 +81,11 @@ public class AccountDAO {
             
             // if(ResultSet.next()){ // we expect no more than 1 username returned
             while(ResultSet.next()){
-                String[] accountInfo = {ResultSet.getString("account_id"), ResultSet.getString("username")};
-                return accountInfo; // make sure getString() skips casting
+                String[] accountInfo = {
+                    // ((Integer) ResultSet.getInt("account_id")).toString()
+                    ResultSet.getString("account_id"), ResultSet.getString("username")};
+                // System.out.println("accountInfo is " + accountInfo[0]);
+                return accountInfo; // getString() is able to cast account_id
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
