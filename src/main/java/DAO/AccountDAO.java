@@ -69,7 +69,7 @@ public class AccountDAO {
         return null;
     }
     // for Message Services: note that we want a username because it will be useful retrieving messages written by a user
-    public array getUserByID(int id){
+    public String[] getUserByID(int id){
         Connection connection = ConnectionUtil.getConnection();
         try {
             String sql = "SELECT account.account_id, account.username FROM account WHERE account_id = ?";
@@ -82,7 +82,7 @@ public class AccountDAO {
             // if(ResultSet.next()){ // we expect no more than 1 username returned
             while(ResultSet.next()){
                 String[] accountInfo = {ResultSet.getString("account_id"), ResultSet.getString("username")};
-                return accountInfo; // make sure getString() is skips casting
+                return accountInfo; // make sure getString() skips casting
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());

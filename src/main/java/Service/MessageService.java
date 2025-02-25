@@ -54,10 +54,10 @@ public class MessageService {
     public Message Send(Message Message) { // creates a message
         int msg_length = Message.getMessage_text().length();
         AccountDAO accounts = new AccountDAO();
-        boolean doesUserExist = accounts.getAccountByUser(Message.get)
-        if (msg_length <= 255 || msg_length == 0 || ) {
+        boolean doesUserExist = accounts.getUserByID(Message.getPosted_by()) != null;
+        if (msg_length > 255 || msg_length == 0 || !doesUserExist) {
             return null;
-        } // password and username requirements
+        } // message requirements
         return this.MessageDAO.insertMessage(Message); //insertMessage should return null if username is not unique
     }
     // public Message Login(Message Message) {
