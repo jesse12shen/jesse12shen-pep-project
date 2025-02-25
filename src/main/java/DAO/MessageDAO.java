@@ -46,7 +46,8 @@ public class MessageDAO {
         }
         return null;
     }
-    // Don't think I need this method from the AuthorDAO
+    
+    // Don't think I need this method from the AccountDAO
     // public Message getMessageByUser(String username){
     //     Connection connection = ConnectionUtil.getConnection();
     //     try {

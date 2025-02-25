@@ -24,7 +24,8 @@ public class SocialMediaController {
         app.post("/register", SocialMediaController.regiHandler);
         // localhost:8080 might already be loaded in
         app.post("/login", SocialMediaController.login);
-        app.post("messages", SocialMediaController.send_msg);
+        app.post("messages", SocialMediaController.sendMsg);
+        app.get("messages", SocialMediaController.retrieveAllMsg);
         return app;
     }
     public static Handler regiHandler = ctx -> {
@@ -62,7 +63,7 @@ public class SocialMediaController {
             ctx.json(result_a);
         }
     };
-    public static Handler send_msg = ctx -> {
+    public static Handler sendMsg = ctx -> {
         ObjectMapper om = new ObjectMapper();
         String jsonBody = ctx.body();
         Message msg_text = om.readValue(jsonBody, Message.class);
@@ -75,5 +76,11 @@ public class SocialMediaController {
             ctx.status(200);
             ctx.json(result_m);
         }
+    };
+    public static Handler retrieveAllMsg = ctx -> {
+        // ObjectMapper om = new ObjectMapper();
+        MessageService getAll = new MessageService();
+        ctx.status(200);
+        ctx.json(getAll.getAllMessages());
     };
 }
