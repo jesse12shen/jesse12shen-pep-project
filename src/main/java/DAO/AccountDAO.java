@@ -67,5 +67,28 @@ public class AccountDAO {
             System.out.println(e.getMessage());
         }
         return null;
-    }    
+    }
+    // for Message Services: note that we want a username because it will be useful retrieving messages written by a user
+    public array getUserByID(int id){
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            String sql = "SELECT account.account_id, account.username FROM account WHERE account_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            //write preparedStatement's setString method here.
+            preparedStatement.setInt(1, id);
+            ResultSet ResultSet = preparedStatement.executeQuery();
+            
+            // if(ResultSet.next()){ // we expect no more than 1 username returned
+            while(ResultSet.next()){
+                String[] accountInfo = {ResultSet.getString("account_id"), ResultSet.getString("username")};
+                return accountInfo; // make sure getString() is skips casting
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
 }

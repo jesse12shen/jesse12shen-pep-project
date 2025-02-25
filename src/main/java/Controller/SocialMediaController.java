@@ -61,6 +61,11 @@ public class SocialMediaController {
             ctx.json(result_a);
         }
     };
+    public static Handler send_msg = ctx -> {
+        ObjectMapper om = new ObjectMapper();
+        String jsonBody = ctx.body();
+        Message msg_text = om.readValue(jsonBody, Message.class);
+    }
     /**
      * This is an example handler for an example endpoint.
      * @param context The Javalin Context object manages information about both the HTTP request and response.
