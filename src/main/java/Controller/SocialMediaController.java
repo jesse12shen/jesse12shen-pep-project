@@ -59,7 +59,6 @@ public class SocialMediaController {
         }
     };
     //#endregion
-
     public static Handler login = ctx -> {
         //#region
         ObjectMapper om = new ObjectMapper();
@@ -114,6 +113,7 @@ public class SocialMediaController {
     };
     //#endregion
     public static Handler deleteMsg = ctx -> {
+        //#region
         MessageService dltMsg = new MessageService();
         ctx.status(200);
         int id_oi = Integer.parseInt(ctx.pathParam("message_id"));
@@ -125,4 +125,5 @@ public class SocialMediaController {
             ctx.json("");
         }
     };
+    //#endregion
 }
