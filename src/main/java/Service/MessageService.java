@@ -47,8 +47,15 @@ public class MessageService {
         } // message requirements
         return this.MessageDAO.insertMessage(Message); //insertMessage should return null if username is not unique
     }
-    public Message getMessageByID( int id) {
+    public Message getMessageByID(int id) {
         return this.MessageDAO.getMessageByID(id);
+    }
+    public Message deleteMsg(int id){
+        Message result_m = this.MessageDAO.getMessageByID(id);
+        if (result_m != null){
+            this.MessageDAO.deleteMessage(id); // not actually a void method, but this if-statement should determine outcome instead
+        } 
+        return result_m;
     }
     // public Message Login(Message Message) {
     //     Message credentials = this.MessageDAO.getMessageByUser(Message.getUsername());

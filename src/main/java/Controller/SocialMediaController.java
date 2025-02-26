@@ -28,9 +28,15 @@ public class SocialMediaController {
         app.post("messages", SocialMediaController.sendMsg);
         app.get("messages", SocialMediaController.rtvAllMsg);
         app.get("messages/{message_id}", SocialMediaController.rtvMsg);
+        app.delete("messages/{message_id}", SocialMediaController.deleteMsg);
         return app;
     }
+
     public static Handler regiHandler = ctx -> {
+        /**
+         * Implementation of handler for new user registration
+     */
+        //#region
         ObjectMapper om = new ObjectMapper();
         String jsonSt = ctx.body();
         // boolean success = false;
@@ -52,7 +58,10 @@ public class SocialMediaController {
         ctx.status(400);
         }
     };
+    //#endregion
+
     public static Handler login = ctx -> {
+        //#region
         ObjectMapper om = new ObjectMapper();
         String jsonBody = ctx.body();
         Account loginInfo = om.readValue(jsonBody, Account.class);
@@ -64,8 +73,9 @@ public class SocialMediaController {
             ctx.status(200);
             ctx.json(result_a);
         }
-    };
+        }; //#endregion
     public static Handler sendMsg = ctx -> {
+        //#region
         ObjectMapper om = new ObjectMapper();
         String jsonBody = ctx.body();
         Message msg_text = om.readValue(jsonBody, Message.class);
@@ -78,14 +88,18 @@ public class SocialMediaController {
             ctx.status(200);
             ctx.json(result_m);
         }
-    };
+    }; 
+    //#endregion
     public static Handler rtvAllMsg = ctx -> {
+        //#region
         // ObjectMapper om = new ObjectMapper();
         MessageService getAll = new MessageService();
         ctx.status(200);
         ctx.json(getAll.getAllMessages());
     };
+    //#endregion
     public static Handler rtvMsg = ctx -> {
+        //#region
         MessageService getMsg = new MessageService();
         ctx.status(200);
         // Optional<Message> result_m = Optional.ofNullable(getMsg.getMessageByID(Integer.parseInt(ctx.pathParam("message_id"))));
@@ -96,8 +110,19 @@ public class SocialMediaController {
         } else {
             ctx.json("");
         }
-
-
         // ctx.json(null); // you get a 500 error when this happens
+    };
+    //#endregion
+    public static Handler deleteMsg = ctx -> {
+        MessageService dltMsg = new MessageService();
+        ctx.status(200);
+        int id_oi = Integer.parseInt(ctx.pathParam("message_id"));
+        Message result_m = dltMsg.getMessageByID(id_oi);
+        if (result_m != null) { 
+            dltMsg.deleteMsg(id_oi);
+            ctx.json(result_m);
+        } else {
+            ctx.json("");
+        }
     };
 }

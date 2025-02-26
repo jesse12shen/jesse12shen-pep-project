@@ -66,6 +66,23 @@ public class MessageDAO {
         }
         return null;
     }
+    public boolean deleteMessage(int id) { // backup message database?
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            String sql = "DELETE FROM message WHERE message_id = ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            // ResultSet rs = //executeUpdate() just returns an int 
+            int result_r = preparedStatement.executeUpdate();
+            // ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
+            if (result_r > 0){
+               return true;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     // Don't think I need this half-implemented method from the AccountDAO
     // public Message getMessageByUser(String username){
     //     Connection connection = ConnectionUtil.getConnection();
