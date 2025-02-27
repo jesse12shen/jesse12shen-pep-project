@@ -70,6 +70,9 @@ public class AccountDAO {
     }
     // for Message Services: note that we want a username because it will be useful retrieving messages written by a user
     public String[] getUserByID(int id){
+        /*
+         * @return a String[] because both account_id and username are retrieved 
+         */
         Connection connection = ConnectionUtil.getConnection();
         try {
             String sql = "SELECT account.account_id, account.username FROM account WHERE account_id = ?";

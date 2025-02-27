@@ -1,4 +1,6 @@
 package Controller;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 // import io.javalin.http.Context;
@@ -71,8 +73,7 @@ public class SocialMediaController {
         if (result_a == null) {
             ctx.status(401);
         } else {
-            ctx.status(200);
-            ctx.json(result_a);
+            ctx.status(200).json(result_a);
         }
         }; //#endregion
     public static Handler sendMsg = ctx -> {
@@ -150,7 +151,16 @@ public class SocialMediaController {
     //#endregion
     public static Handler rtvAllMsg_a = ctx -> {
         //#region
-        
+        MessageService rtvMsg = new MessageService();
+        int id_oi = Integer.parseInt(ctx.pathParam("account_id"));
+        ctx.status(200);
+        List<Message> result_ml = rtvMsg.getAllMsgByAcct(id_oi);
+        if (result_ml == null){
+            ctx.json(new ArrayList<Message>());  // an empty json fails the test
+        } else {
+            ctx.json(result_ml);
+        }  
+        // ctx.json(result_ml); //beware of null pointer exception
     };
     //#endregion
 }

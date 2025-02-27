@@ -101,6 +101,23 @@ public class MessageDAO {
         }
         return false;
     }
+    public List<Message> getAllMessagesByPosted_By(int a_id){
+        Connection connection = ConnectionUtil.getConnection();
+        List<Message> Messages = new ArrayList<>();
+        try { 
+            String sql = "SELECT * FROM message WHERE posted_by = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, a_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                Message Message = new Message(rs.getInt("message_id"), rs.getInt("posted_by"), rs.getString("message_text"), rs.getLong("time_posted_epoch"));
+                Messages.add(Message);
+                }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return Messages;
+    }
     // Don't think I need this half-implemented method from the AccountDAO
     // public Message getMessageByUser(String username){
     //     Connection connection = ConnectionUtil.getConnection();

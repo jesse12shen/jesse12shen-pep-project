@@ -72,11 +72,13 @@ public class MessageService {
 
         return null;
     }
-    public Message getAllMsgByAcct(int a_id){
+    public List<Message> getAllMsgByAcct(int a_id){
         AccountDAO accounts = new AccountDAO();
-        String username_oi = accounts.getUserByID(a_id);
-        
-        return this.MessageDAO.getAllMessages();
+        String[] account_oi = accounts.getUserByID(a_id); // 0th index is id
+        if (account_oi == null){
+            return null; // this case wasn't explicitly provided 
+        };
+        return this.MessageDAO.getAllMessagesByPosted_By(a_id);
     }
     // public Message Login(Message Message) {
     //     Message credentials = this.MessageDAO.getMessageByUser(Message.getUsername());
