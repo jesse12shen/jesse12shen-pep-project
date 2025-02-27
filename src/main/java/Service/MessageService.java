@@ -1,7 +1,8 @@
 package Service;
 
+import Model.*;
 // import Model.Account;
-import Model.Message;
+// import Model.Message;
 import DAO.MessageDAO;
 import DAO.AccountDAO;
 
@@ -70,6 +71,12 @@ public class MessageService {
         }
 
         return null;
+    }
+    public Message getAllMsgByAcct(int a_id){
+        AccountDAO accounts = new AccountDAO();
+        String username_oi = accounts.getUserByID(a_id);
+        
+        return this.MessageDAO.getAllMessages();
     }
     // public Message Login(Message Message) {
     //     Message credentials = this.MessageDAO.getMessageByUser(Message.getUsername());

@@ -30,6 +30,7 @@ public class SocialMediaController {
         app.get("messages/{message_id}", SocialMediaController.rtvMsg);
         app.delete("messages/{message_id}", SocialMediaController.deleteMsg);
         app.patch("messages/{message_id}",SocialMediaController.editMsg);
+        app.get("/accounts/{account_id}/messages",SocialMediaController.rtvAllMsg_a);
         return app;
     }
 
@@ -137,14 +138,19 @@ public class SocialMediaController {
         // String umsg_text = ctx.body().substring(18); //"message_text:" is 18 characters long
         String umsg_text = jsonBody.substring(18,jsonBody.length()-3); //"message_text:" is 18 characters long, "}" 3 chars at end
         int id_oi = Integer.parseInt(ctx.pathParam("message_id"));
-        System.out.println("Going to services!");
+        // System.out.println("Going to services!");
         Message result_m = eMsg.editMsg(id_oi, umsg_text);
-        System.out.println("message updated!");
+        // System.out.println("message updated!");
         if (result_m != null) { 
             ctx.json(result_m).status(200);
         } else {
             ctx.status(400);
         }
+    };
+    //#endregion
+    public static Handler rtvAllMsg_a = ctx -> {
+        //#region
+        
     };
     //#endregion
 }
