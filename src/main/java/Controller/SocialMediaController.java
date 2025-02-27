@@ -129,7 +129,22 @@ public class SocialMediaController {
     //#endregion
     public static Handler editMsg = ctx -> {
         //#region
-        
-        //#endregion
+        MessageService eMsg = new MessageService();
+        // ObjectMapper om = new ObjectMapper();
+        // System.out.println("initialized!");
+        String jsonBody = ctx.body();
+        // String umsg_text = om.readValue(jsonBody,  String.class); // check if "message_text:" is in the output
+        // String umsg_text = ctx.body().substring(18); //"message_text:" is 18 characters long
+        String umsg_text = jsonBody.substring(18,jsonBody.length()-3); //"message_text:" is 18 characters long, "}" 3 chars at end
+        int id_oi = Integer.parseInt(ctx.pathParam("message_id"));
+        System.out.println("Going to services!");
+        Message result_m = eMsg.editMsg(id_oi, umsg_text);
+        System.out.println("message updated!");
+        if (result_m != null) { 
+            ctx.json(result_m).status(200);
+        } else {
+            ctx.status(400);
+        }
     };
+    //#endregion
 }
