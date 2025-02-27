@@ -29,6 +29,7 @@ public class SocialMediaController {
         app.get("messages", SocialMediaController.rtvAllMsg);
         app.get("messages/{message_id}", SocialMediaController.rtvMsg);
         app.delete("messages/{message_id}", SocialMediaController.deleteMsg);
+        app.patch("messages/{message_id}",SocialMediaController.editMsg);
         return app;
     }
 
@@ -126,4 +127,9 @@ public class SocialMediaController {
         }
     };
     //#endregion
+    public static Handler editMsg = ctx -> {
+        //#region
+        
+        //#endregion
+    };
 }

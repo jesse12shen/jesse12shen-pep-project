@@ -26,7 +26,6 @@ public class MessageService {
         this.MessageDAO = MessageDAO;
     }
     /**
-     * The MessageDAO retrieves all Messages.
      *
      * @return all Messages
      */
@@ -35,7 +34,7 @@ public class MessageService {
     }
     /**
      *
-     * @param Message an Message object.
+     * @param Message a Message object.
      * @return The persisted Message if the persistence is successful.
      */
     public Message Send(Message Message) { // creates a message
@@ -56,6 +55,21 @@ public class MessageService {
             this.MessageDAO.deleteMessage(id); // not actually a void method, but this if-statement should determine outcome instead
         } 
         return result_m;
+    }
+    public Message editMsg(int id, String text){
+        Message msg_oi = MessageDAO.getMessageByID(id);
+        boolean doesMsgExist = msg_oi != null;
+        int msg_length = text.length();
+        if (msg_length > 255 || msg_length == 0 || !doesMsgExist) {
+            return null;
+        } // message requirements
+        boolean updateSuccessful = MessageDAO.updateMessage(id, text);
+        if (updateSuccessful){
+            msg_oi = MessageDAO.getMessageByID(id);
+            return msg_oi;
+        }
+
+        return null;
     }
     // public Message Login(Message Message) {
     //     Message credentials = this.MessageDAO.getMessageByUser(Message.getUsername());

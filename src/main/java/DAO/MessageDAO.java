@@ -69,9 +69,27 @@ public class MessageDAO {
     public boolean deleteMessage(int id) { // backup message database?
         Connection connection = ConnectionUtil.getConnection();
         try {
-            String sql = "DELETE FROM message WHERE message_id = ?)";
+            String sql = "DELETE FROM message WHERE message_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
+            // ResultSet rs = //executeUpdate() just returns an int 
+            int result_r = preparedStatement.executeUpdate();
+            // ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
+            if (result_r > 0){
+               return true;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+    public boolean updateMessage(int id, String text) { // backup message database?
+        Connection connection = ConnectionUtil.getConnection();
+        try {
+            String sql = "UPDATE message SET message_text = ? WHERE message_id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, text);
+            preparedStatement.setInt(2, id);
             // ResultSet rs = //executeUpdate() just returns an int 
             int result_r = preparedStatement.executeUpdate();
             // ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
