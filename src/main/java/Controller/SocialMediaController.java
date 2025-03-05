@@ -10,8 +10,7 @@ import Model.*;
 // import DAO.*;
 import Service.*;
 
-/**
- * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
+/** The endpoints you will need can be
  * found in readme.md as well as the test cases. You should
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
@@ -25,7 +24,7 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
         // app.get("example-endpoint", this::exampleHandler);
         app.post("/register", SocialMediaController.regiHandler);
-        // localhost:8080 might already be loaded in
+        // localhost:8080 already loaded in as part of setup
         app.post("/login", SocialMediaController.login);
         app.post("messages", SocialMediaController.sendMsg);
         app.get("messages", SocialMediaController.rtvAllMsg);
@@ -37,10 +36,10 @@ public class SocialMediaController {
     }
 
     public static Handler regiHandler = ctx -> {
-        /**
-         * Implementation of handler for new user registration
-     */
         //#region
+        /**
+         * Implementation of handler for new user registration. JSON Body of the request for this endpoint/handler should have Account constructor args
+        **/
         ObjectMapper om = new ObjectMapper();
         String jsonSt = ctx.body();
         // boolean success = false;
@@ -61,10 +60,12 @@ public class SocialMediaController {
         else {
         ctx.status(400);
         }
-    };
-    //#endregion
+    }; //#endregion
     public static Handler login = ctx -> {
-        //#region
+        //#region  
+        /**
+         * Implementation of handler for user login. JSON request body should contain account info
+        **/
         ObjectMapper om = new ObjectMapper();
         String jsonBody = ctx.body();
         Account loginInfo = om.readValue(jsonBody, Account.class);
@@ -90,31 +91,28 @@ public class SocialMediaController {
             ctx.status(200);
             ctx.json(result_m);
         }
-    }; 
-    //#endregion
+    }; //#endregion
     public static Handler rtvAllMsg = ctx -> {
         //#region
         // ObjectMapper om = new ObjectMapper();
         MessageService getAll = new MessageService();
         ctx.status(200);
         ctx.json(getAll.getAllMessages());
-    };
-    //#endregion
+    }; //#endregion
     public static Handler rtvMsg = ctx -> {
         //#region
         MessageService getMsg = new MessageService();
         ctx.status(200);
-        // Optional<Message> result_m = Optional.ofNullable(getMsg.getMessageByID(Integer.parseInt(ctx.pathParam("message_id"))));
+        // Optional<Message> result_m = Optional.ofNullable(getMsg.getMessageByID(Integer.parseInt(ctx.pathParam("message_id")))); // needs a bit more implementation to work
         Message result_m = getMsg.getMessageByID(Integer.parseInt(ctx.pathParam("message_id")));
-        // needs a bit more implementation to work
+        
         if (result_m != null) { 
         ctx.json(result_m);
         } else {
             ctx.json("");
         }
         // ctx.json(null); // you get a 500 error when this happens
-    };
-    //#endregion
+    }; //#endregion
     public static Handler deleteMsg = ctx -> {
         //#region
         MessageService dltMsg = new MessageService();
@@ -136,7 +134,7 @@ public class SocialMediaController {
         // System.out.println("initialized!");
         String jsonBody = ctx.body();
         // String umsg_text = om.readValue(jsonBody,  String.class); // check if "message_text:" is in the output
-        // String umsg_text = ctx.body().substring(18); //"message_text:" is 18 characters long
+        // String umsg_text = ctx.body().substring(18); //"message_text:" is 18 characters long //ObjectMapper might need more args for this to work
         String umsg_text = jsonBody.substring(18,jsonBody.length()-3); //"message_text:" is 18 characters long, "}" 3 chars at end
         int id_oi = Integer.parseInt(ctx.pathParam("message_id"));
         // System.out.println("Going to services!");

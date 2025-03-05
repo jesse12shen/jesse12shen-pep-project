@@ -118,25 +118,4 @@ public class MessageDAO {
         }
         return Messages;
     }
-    // Don't think I need this half-implemented method from the AccountDAO
-    // public Message getMessageByUser(String username){
-    //     Connection connection = ConnectionUtil.getConnection();
-    //     try {
-    //         String sql = "SELECT Message.Message_id, Message.username, Message.password FROM Message WHERE username = ?";
-    //         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-    //         //write preparedStatement's setString method here.
-    //         preparedStatement.setString(1, username);
-    //         ResultSet ResultSet = preparedStatement.executeQuery();
-            
-    //         // if(ResultSet.next()){ // we expect no more than 1 username returned
-    //         while(ResultSet.next()){
-    //             Message credentials = new Message(ResultSet.getInt("Message_id"), ResultSet.getString("username"), ResultSet.getString("password"));
-    //             return credentials;
-    //         }
-    //     }catch(SQLException e){
-    //         System.out.println(e.getMessage());
-    //     }
-    //     return null;
-    // }    
 }

@@ -80,15 +80,4 @@ public class MessageService {
         };
         return this.MessageDAO.getAllMessagesByPosted_By(a_id);
     }
-    // public Message Login(Message Message) {
-    //     Message credentials = this.MessageDAO.getMessageByUser(Message.getUsername());
-    //     if (credentials == null || !Message.getPassword().equals(credentials.getPassword())) //we'd probably want to distinguish the errors, throw an exception? Return a dummy Message with specifics?
-    //     {
-    //         // System.out.println("login was" + Message.getPassword() + "but actually " + credentials.getPassword());
-            
-    //         // System.out.println(Message.getUsername() == credentials.getUsername());
-    //         return null;
-    //     }
-    //     return credentials;
-    // }
 }
