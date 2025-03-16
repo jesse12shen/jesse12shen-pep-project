@@ -97,6 +97,9 @@ public class SocialMediaController {
     }; //#endregion
     public static Handler rtvAllMsg = ctx -> {
         //#region
+        /**
+         * Handler implementation for retrieving all messages
+         */
         // ObjectMapper om = new ObjectMapper();
         MessageService getAll = new MessageService();
         ctx.status(200);
@@ -104,6 +107,9 @@ public class SocialMediaController {
     }; //#endregion
     public static Handler rtvMsg = ctx -> {
         //#region
+        /**
+         * Handler implementation for returning a message given a message_id in the URI. Responds w/ a JSON message
+         */
         MessageService getMsg = new MessageService();
         ctx.status(200);
         // Optional<Message> result_m = Optional.ofNullable(getMsg.getMessageByID(Integer.parseInt(ctx.pathParam("message_id")))); // needs a bit more implementation to work
@@ -118,6 +124,9 @@ public class SocialMediaController {
     }; //#endregion
     public static Handler deleteMsg = ctx -> {
         //#region
+        /**
+         * Handler implementation for deleting a message given the message_id in the URI. Always returns a 200 with or without the now-deleted message to be idempotent.
+         */
         MessageService dltMsg = new MessageService();
         ctx.status(200);
         int id_oi = Integer.parseInt(ctx.pathParam("message_id"));
@@ -132,6 +141,9 @@ public class SocialMediaController {
     //#endregion
     public static Handler editMsg = ctx -> {
         //#region
+        /**
+         * Handler implementation for updating a message given the request body meets requirements. Error (400) otherwise
+         */
         MessageService eMsg = new MessageService();
         // ObjectMapper om = new ObjectMapper();
         // System.out.println("initialized!");
@@ -152,6 +164,9 @@ public class SocialMediaController {
     //#endregion
     public static Handler rtvAllMsg_a = ctx -> {
         //#region
+        /**
+         * Handler implementation for looking at a given user's messages. Uses account_id in the URI. Always 200 
+         */
         MessageService rtvMsg = new MessageService();
         int id_oi = Integer.parseInt(ctx.pathParam("account_id"));
         ctx.status(200);
