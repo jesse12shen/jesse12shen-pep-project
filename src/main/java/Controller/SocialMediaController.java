@@ -47,7 +47,7 @@ public class SocialMediaController {
         AccountService regiCall = new AccountService();
         Account new_user = om.readValue(jsonSt, Account.class);
         // if (new_user.getPassword().length() > 4 &&
-        
+        // best practice is to use a service class
         // ) {
         //     success = true;
         // }
@@ -79,6 +79,9 @@ public class SocialMediaController {
         }; //#endregion
     public static Handler sendMsg = ctx -> {
         //#region
+        /**
+        * Implementation of handler for message creation. JSON request body should contain message info
+        **/
         ObjectMapper om = new ObjectMapper();
         String jsonBody = ctx.body();
         Message msg_text = om.readValue(jsonBody, Message.class);
