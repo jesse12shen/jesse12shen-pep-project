@@ -47,7 +47,7 @@ public class SocialMediaController {
         AccountService regiCall = new AccountService();
         Account new_user = om.readValue(jsonSt, Account.class);
         // if (new_user.getPassword().length() > 4 &&
-        
+        // best practice is to use a service class
         // ) {
         //     success = true;
         // }
